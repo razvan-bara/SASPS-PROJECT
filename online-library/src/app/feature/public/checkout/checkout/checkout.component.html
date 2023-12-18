@@ -1,0 +1,90 @@
+<div class="container has-navbar-fixed-top-spacing">
+  <div *ngIf="products.size > 0; else noProductsInCart">
+    <form class="columns" [formGroup]="checkoutForm" (ngSubmit)="submitOrder()">
+      <div class="column">
+        <h2 class="title">Cartile din cos</h2>
+
+        <ng-container *ngFor="let product of products | keyvalue">
+          <div class="card">
+            <div class="card-content">
+              <div class="media">
+                <div class="media-left">
+                  <figure class="image is-64x64">
+                    <img
+                      [src]="getImage(product.value)"
+                      alt="Placeholder image"
+                    />
+                  </figure>
+                </div>
+                <div class="media-content">
+                  <p class="title is-4">{{ product.value.title }}</p>
+                  <p class="subtitle is-6">
+                    <a *ngFor="let author of product.value.authors" routerLink="/authors/{{author.authorId}}">
+                      {{
+                        author.first_name +
+                          " " +
+                          author.last_name
+                      }}
+                    </a>
+                  </p>
+                </div>
+                <div class="media-right">
+                  <button (click)="removeProductFromCart(product.value)" class="delete"></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <div class="column">
+        <h2 class="title">Cum vrei sa primesti cartile?</h2>
+        <div class="field">
+          <label class="label">Alege una din cele 2 optiuni</label>
+          <div class="control">
+            <label class="radio">
+              <input
+                type="radio"
+                (change)="onDeliveryOptionChange()"
+                formControlName="withDelivery"
+                value=0
+                [defaultChecked]="true"
+              />
+              Le ridic eu de la biblioteca
+            </label>
+          </div>
+          <div class="control">
+            <label class="radio">
+              <input
+                type="radio"
+                (change)="onDeliveryOptionChange()"
+                formControlName="withDelivery"
+                value=1
+              />
+              Cu livrare la domiciliu
+            </label>
+          </div>
+        </div>
+        <ng-container *ngIf="showDeliveryInfo == 0; else deliveryFields">
+          <button class="button is-success is-fullwidth">
+            Plaseaza comanda
+          </button>
+        </ng-container>
+        <ng-template #deliveryFields>
+          <app-address (passAddress)="setAddress($event)"></app-address>
+          <p class="label">
+            Taxa de livrarea este de 20RON
+          </p>
+          <button class="button is-success is-fullwidth" [disabled]="address$ == null">Urmatorul pas</button>
+        </ng-template>
+      </div>
+    </form>
+  </div>
+  <ng-template #noProductsInCart>
+    <p class="is-subtitle"></p>
+    <section class="hero is-link">
+      <div class="hero-body">
+        <p class="title">Se pare ca nu aveti nicio carte in cos</p>
+      </div>
+    </section>
+  </ng-template>
+</div>

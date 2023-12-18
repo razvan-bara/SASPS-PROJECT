@@ -1,0 +1,46 @@
+<div *ngIf="isDataLoaded" class="bg-primary">
+    <div class="container is-max-desktop">
+      <form class="box" [formGroup]="authorForm" (ngSubmit)="onSubmit()">
+        <div class="field">
+          <label class="label">Prenume</label>
+          <div class="control">
+            <input 
+            class="input"
+            [ngClass]="{'is-success': isFirstNameValid, 'is-danger' : isFirstNameInvalid}" 
+            type="text" 
+            placeholder="Prenumele autorului"
+            formControlName="first_name" 
+            required
+            />
+          </div>
+          <div *ngIf="isFirstNameTouched">
+            <p *ngIf="isFirstNameInvalid" class="help is-danger">Prenumele autorului este necesar</p>
+          </div>
+        </div>
+  
+        <div class="field">
+          <label class="label">Nume de familie</label>
+          <div class="control">
+            <input
+              class="input"
+              [ngClass]="{'is-success': isLastNameValid, 'is-danger' : isLastNameInvalid}" 
+              type="text"
+              formControlName="last_name" 
+              placeholder="Numele de familie al autorului"
+              value=""
+            />
+          </div>
+          <div *ngIf="isLastNameTouched">
+            <p *ngIf="isLastNameInvalid" class="help is-danger">Numele de familie al autorului este necesar</p>
+          </div>
+        </div>
+  
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button is-primary" type="submit" [disabled]="!authorForm.valid">Trimite</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  

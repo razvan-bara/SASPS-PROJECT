@@ -1,0 +1,38 @@
+<section class="hero is-link is-small has-navbar-fixed-top-spacing text-center">
+    <div class="hero-body">
+      <p class="title">Categorii</p>
+      <p class="subtitle">Categoriile cartilor din biblioteca</p>
+    </div>
+</section>
+<div class="container is-max-widescreen">
+    <p class="control is-expanded mt-2 has-icons-left">
+        <input
+          #search
+          class="input"
+          type="text"
+          placeholder="Scrie numele categoriei dorite"
+          (keyup)="searchCategories(search.value)"
+        />
+        <span class="icon is-left">
+            <fa-icon [icon]="faSearch"></fa-icon>
+        </span>
+    </p>
+    <div *ngIf="categories$ && categories$.length > 0; else emptyCategories">
+      <ng-container *ngFor="let category of categories$">
+          <app-category-card [category]="category"></app-category-card>
+      </ng-container>
+    </div>
+    <ng-template #emptyCategories>
+      <h2 class="has-text-danger">{{error}}</h2>
+    </ng-template>
+    <nav
+    class="pagination is-rounded mt-2"
+    role="navigation"
+    aria-label="pagination"
+  >
+    <a class="pagination-previous" [ngClass]="{ 'is-hidden': isFirstPage }" (click)="changePage(-1)">Inapoi</a>
+    <a class="pagination-next" [ngClass]="{ 'is-hidden': hideNextPageBtn }" (click)="changePage(1)">Pagina urmatoare</a>
+    <ul class="pagination-list">
+    </ul>
+  </nav>
+</div>

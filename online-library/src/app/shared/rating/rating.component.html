@@ -1,0 +1,25 @@
+<div [ngClass]="modalInput ? 'is-active' : ''" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Apreciere</p>
+      <button (click)="hideModal()" class="delete" aria-label="close"></button>
+    </header>
+    <section class="modal-card-body">
+      <div class="rating-box is-active">
+        <header>Cum ti s-a parut aceasta carte?</header>
+        <div class="stars">
+          <i *ngFor="let i of stars" (click)="setStarsActive(i)">
+            <fa-icon [id]="'star' + i" class="star" [icon]="faStar"></fa-icon>
+          </i>
+        </div>
+      </div>
+    </section>
+    <footer class="modal-card-foot">
+      <button (click)="submitRating()" class="button is-success">
+        Trimite
+      </button>
+      <button (click)="hideModal()" class="button">Anuleaza</button>
+    </footer>
+  </div>
+</div>

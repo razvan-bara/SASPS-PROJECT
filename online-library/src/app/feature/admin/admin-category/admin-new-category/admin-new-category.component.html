@@ -1,0 +1,7 @@
+<section class="hero is-primary is-small form-has-navbar-fixed-top-spacing-admin text-center">
+    <div class="hero-body">
+      <p class="title">Adauga o categorie noua</p>
+    </div>
+  </section>
+  <br>
+<app-admin-category-form (categoryFormEvent)="addCategory($event)" [decideToResetFormEvent]="resetCategoryForm.asObservable()"></app-admin-category-form>

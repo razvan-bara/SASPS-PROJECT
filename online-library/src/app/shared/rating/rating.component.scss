@@ -1,0 +1,26 @@
+.rating-box {
+    position: relative;
+    background: #fff;
+    padding: 25px 50px 35px;
+  }
+  .rating-box header {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .rating-box .stars {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+  }
+  .stars .star {
+    color: #e6e6e6;
+    font-size: 35px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  .stars .star.active {
+    color: #ff9c1a;
+  }

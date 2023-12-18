@@ -1,0 +1,81 @@
+<div class="container is-widescreen has-navbar-fixed-top-spacing-admin">
+    <div class="columns">
+      <div class="column is-primary">
+        <p class="control has-icons-left">
+          <input #search class="input is-link" type="text" placeholder="Cauta dupa numele autorului" (input)="searchAuthors(search.value)" />
+          <span class="icon is-left">
+            <fa-icon [icon]="faSearch"></fa-icon>
+          </span>
+        </p>
+      </div>
+      <div class="column">
+        <button class="button is-primary" (click)="filterAuthors()">Filtreaza</button>
+      </div>
+    </div>
+    <a routerLink="/admin/authors/new"><button class="button is-link">Adauga autor nou</button></a>
+    <nav class="pagination is-rounded" role="navigation" aria-label="pagination">
+      <a
+        class="pagination-previous"
+        [ngClass]="{ 'is-hidden': isFirstPage }"
+        (click)="changePage(-1)"
+        >Inapoi</a
+      >
+      <a
+        class="pagination-next"
+        [ngClass]="{ 'is-hidden': hideNextPageBtn }"
+        (click)="changePage(1)"
+        >Pagina urmatoare</a
+      >
+      <ul class="pagination-list"></ul>
+    </nav>
+    <table class="table is-bordered is-hoverable is-fullwidth">
+      <thead>
+        <tr>
+          <th *ngFor="let key of AUTHOR_KEYS">{{ key }}</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <th *ngFor="let key of AUTHOR_KEYS">{{ key }}</th>
+        </tr>
+      </tfoot>
+      <tbody>
+        <ng-container *ngIf="authors$.length > 0; else noAuthors;">
+          <tr *ngFor="let author of authors$; let i = index">
+            <th>{{ i * (pageNumber + 1) + 1 }}</th>
+            <th>{{ author.authorId }}</th>
+            <td>{{ author.first_name }}</td>
+            <td>{{ author.last_name }}</td>
+            <td>{{ author.bookCount }}</td>
+            <td><a routerLink="/admin/authors/{{author.authorId}}"><button class="button is-light">Edit</button></a></td>
+            <td (click)="deleteAuthorRow(author)">
+              <button class="button is-danger">
+                <fa-icon [icon]="faDelete"></fa-icon>
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+        <ng-template #noAuthors>
+          <tr  class="has-text-danger text-center" >
+            <td [attr.colspan]="AUTHOR_KEYS.length + 2">{{error}}</td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </table>
+    <nav class="pagination is-rounded" role="navigation" aria-label="pagination">
+      <a
+        class="pagination-previous"
+        [ngClass]="{ 'is-hidden': isFirstPage }"
+        (click)="changePage(-1)"
+        >Inapoi</a
+      >
+      <a
+        class="pagination-next"
+        [ngClass]="{ 'is-hidden': hideNextPageBtn }"
+        (click)="changePage(1)"
+        >Pagina urmatoare</a
+      >
+      <ul class="pagination-list"></ul>
+    </nav>
+  </div>
+  <app-author-modal *ngIf="displayDeleteModal" [authorInput]="authorToDelete" (deleteAuthor)="handleAuthorDelete($event)"></app-author-modal>

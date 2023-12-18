@@ -1,0 +1,18 @@
+<div class="columns is-vcentered full-height bg-primary">
+    <div  class="container is-max-desktop">
+        <section *ngIf="fetchedInfo; else loading"
+        class="box notification"
+        [ngClass]="{'is-danger' : isError, 'is-warning': isWarning, 'is-success': isError==isWarning}"
+        >
+            <h3 class="title is-3">{{ title }}</h3>
+            <div class="content">
+                <p>{{ message }}</p> 
+            </div>
+        </section>
+    </div>
+    <ng-template #loading>
+        <section class="box text-center">
+            Loading...
+        </section>
+    </ng-template>
+</div>

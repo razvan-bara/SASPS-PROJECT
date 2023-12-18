@@ -1,0 +1,18 @@
+<ng-container *ngIf="book$ != null; else isError">
+  <section class="hero is-primary is-small form-has-navbar-fixed-top-spacing-admin text-center">
+      <div class="hero-body">
+        <p class="title">Editeaza cartea</p>
+      </div>
+    </section>
+    <br>
+  <app-admin-book-form [book]="book$" (bookFormEvent)="updateBook($event)"></app-admin-book-form>
+</ng-container>
+<ng-template #isError>
+  <section class="hero is-danger has-navbar-fixed-top-spacing-admin">
+      <div class="hero-body">
+        <p class="title">
+          {{error}}
+        </p>
+      </div>
+    </section>
+</ng-template>

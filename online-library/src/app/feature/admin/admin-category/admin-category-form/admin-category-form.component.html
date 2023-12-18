@@ -1,0 +1,44 @@
+<div *ngIf="isDataLoaded" class="bg-primary">
+    <div class="container is-max-desktop">
+      <form class="box" [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+        <div class="field">
+          <label class="label">Nume categorie</label>
+          <div class="control">
+            <input 
+            class="input"
+            [ngClass]="{'is-success': isTitleValid, 'is-danger' : isTitleInvalid}" 
+            type="text" 
+            placeholder="Numele categoriei"
+            formControlName="title" 
+            required
+            />
+          </div>
+          <div *ngIf="isTitleTouched">
+            <p *ngIf="isTitleInvalid" class="help is-danger">Numele categoriei este necesar</p>
+          </div>
+        </div>
+  
+        <div class="field">
+            <label class="label">Descriere</label>
+            <div class="control">
+              <textarea
+                [ngClass]="{'is-success': isDescriptionValid, 'is-danger' : isDescriptionInvalid}" 
+                class="textarea"
+                placeholder="Introdu descrierea categoriei"
+                formControlName="description"
+              ></textarea>
+            </div>
+            <div *ngIf="isDescriptionTouched">
+              <p *ngIf="isDescriptionInvalid" class="help is-danger">Descrierea categoriei este necesara</p>
+            </div>
+          </div>
+  
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button is-primary" type="submit" [disabled]="!categoryForm.valid">Trimite</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  

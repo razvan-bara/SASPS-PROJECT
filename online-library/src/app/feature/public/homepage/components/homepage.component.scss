@@ -1,0 +1,27 @@
+.publicBanner {
+    display: grid;
+    width: 100%;
+    height: 400px;
+    background-image: url("../../../../../assets/images/publicBanner.jpg");
+    opacity: 0.9;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .banner-center{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+  }
+
+  .banner-title{
+    background-color: hsl(0, 0%, 48%,.3), ;
+    text-align: center;
+    z-index: 10;
+  }
+
+  .banner-buttons{
+    justify-content: center;
+    z-index: 10;
+  }

@@ -1,0 +1,21 @@
+<div 
+    [ngClass]="modalInput ? 'is-active' : ''"
+    class="modal"
+    >
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Atentie!</p>
+        <button (click)="hideModal()"  class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        Pentru a putea adauga carti si a finaliza comanda trebuie sa intrati in cont.
+        <br>
+        Puteti merge la login sau la pagina de sign-up
+      </section>
+      <footer class="modal-card-foot">
+          <button (click)="hideModal('register')" class="button is-success">Cont nou</button>
+          <button (click)="hideModal('login')" class="button">Intra in cont</button>
+      </footer>
+    </div>
+  </div>

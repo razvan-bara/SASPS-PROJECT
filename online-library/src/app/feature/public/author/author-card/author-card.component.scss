@@ -1,0 +1,8 @@
+.author-card{
+    transition: all 0.2s ease-in;
+}
+
+.author-card:hover{
+    background: hsl(217, 71%, 53%);
+    color: hsl(0, 0%, 96%)
+}

@@ -1,0 +1,66 @@
+<div [ngClass]="modalInput ? 'is-active' : ''" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Adresa mea</p>
+        <span (click)="closeModal()" class="delete" aria-label="close"></span>
+      </header>
+      <section class="modal-card-body">
+        <div class="field">
+          <label class="label">Strada</label>
+          <div class="control">
+            <input
+              class="input"
+              [ngClass]="{
+                'is-success': isStreetValid,
+                'is-danger': isStreetInvalid
+              }"
+              type="text"
+              placeholder="Numele strazii"
+              formControlName="street"
+              required
+            />
+          </div>
+          <div *ngIf="isStreetTouched">
+            <p *ngIf="isStreetInvalid" class="help is-danger">
+              Numele strazii este necesar
+            </p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Numar</label>
+          <div class="control">
+            <input
+              class="input"
+              [ngClass]="{
+                'is-success': isNumberValid,
+                'is-danger': isNumberInvalid
+              }"
+              type="number"
+              formControlName="number"
+              placeholder="Numarul strazii"
+              value=""
+            />
+          </div>
+          <div *ngIf="isNumberTouched">
+            <p *ngIf="isNumberInvalid" class="help is-danger">
+              Numarul strazii este necesar
+            </p>
+          </div>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button
+          class="button is-primary"
+          type="submit"
+          [disabled]="!addressForm.valid"
+        >
+          Submit
+        </button>
+        <span class="button" (click)="closeModal()">Cancel</span>
+      </footer>
+    </form>
+  </div>
+</div>

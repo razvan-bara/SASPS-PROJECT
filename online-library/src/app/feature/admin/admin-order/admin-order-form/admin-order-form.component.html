@@ -1,0 +1,59 @@
+<div *ngIf="isDataLoaded" class="bg-primary">
+    <div class="container is-max-desktop">
+      <form class="box" [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+        <div class="field">
+          <label class="label">Statusul comenzii</label>
+          <p class="help">Status curent: {{orderStatusString}}</p>
+          <div class="control">
+            <select2
+                [ngClass]="" 
+                [overlay]="false"
+                [data]="statusSelectData"
+                formControlName="status"
+                [value]="orderStatus"
+                resettable
+                id="selec2-2"
+                >
+            </select2>
+          </div>
+          <div *ngIf="isStatusTouched">
+            <p *ngIf="isStatusInvalid" class="help is-danger">Statusul este necesar</p>
+          </div>
+        </div>
+  
+        <div class="field">
+          <label class="label">Carti</label>
+          <span (click)="loadBooks()">
+                <p 
+                [ngClass]="displayBooks ? 'has-text-danger-dark' : 'has-text-link-dark'"
+                class="help is-clickable"
+                >
+                    {{ displayBooks ? 'Ascunde cartile' : 'Afiseaza cartile comenzii'}}
+                </p>
+          </span>
+          <p *ngIf="areBooksLoading" class="help">Loading...</p>
+          <div *ngIf="booksLoaded && displayBooks" class="control">
+            <select2
+                [ngClass]="" 
+                [overlay]="false"
+                [data]="booksSelectData"
+                formControlName="booksIds"
+                [value]="initialOrderBooksIds"
+                [multiple]="true"
+                resettable
+                id="selec2-1"
+                >
+            </select2>
+            <p *ngIf="orderStatus >= 1" class="help is-danger">Cartile nu mai pot modificate din cauza statusului '{{orderStatusString}}'</p>
+          </div>
+        </div>
+  
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button is-primary" type="submit" [disabled]="!orderForm.valid">Trimite</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  

@@ -1,0 +1,98 @@
+<section class="section has-navbar-fixed-top-spacing">
+  <div class="container">
+    <h1 class="title center">Profilul utilizatorului</h1>
+    <app-address></app-address>
+    <h2 class="title is-5 mt-4">Comenzile tale</h2>
+    <ng-container *ngIf="orders$.length > 0; else noOrderAvailable">
+      <table  class="table is-hoverable is-fullwidth">
+        <thead>
+          <tr>
+            <th *ngFor="let key of ORDER_KEYS">{{ key }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let order of orders$">
+            <tr class="expandable-row" (click)="toggleExpandedRow(order)">
+              <td>{{ order.orderId }}</td>
+              <td>{{ order.createdAt | date : "mediumDate" }}</td>
+              <td>
+                {{
+                  order.lendedAt != null
+                    ? (order.lendedAt | date : "mediumDate")
+                    : "-"
+                }}
+              </td>
+              <td>
+                {{
+                  order.returnedAt != null
+                    ? (order.returnedAt | date : "mediumDate")
+                    : "-"
+                }}
+              </td>
+              <td>
+                {{
+                  order.returnDate != null
+                    ? (order.returnDate | date : "mediumDate")
+                    : "-"
+                }}
+              </td>
+              <td [ngClass]="this.getOrderStatusClass(order)">
+                {{ this.getOrderStatus(order) }}
+              </td>
+              <td>{{ order.withDelivery ? "Da" : "Nu" }}</td>
+            </tr>
+            <tr class="expanded-row" *ngIf="rowsExpanded.get(order.orderId)">
+              <td [attr.colspan]="ORDER_KEYS.length">
+                <table class="table is-bordered is-fullwidth">
+                  <thead>
+                    <tr>
+                      <th *ngFor="let key of BOOK_KEYS">{{ key }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let book of order.books; let i = index">
+                      <td>{{ i+1 }}</td>
+                      <td><a routerLink="/books/{{book.bookId}}">{{ book.title }}</a></td>
+                      <td>
+                        <a *ngFor="let author of book.authors; let i = index;"  routerLink="/authors/{{author.authorId}}">{{ author.first_name + " " + author.last_name }} {{i < book.authors.length - 1 ? ',' : '' }}</a>
+                      </td>
+                      <td>
+                        <abbr *ngFor="let category of book.categories">
+                          <a routerLink="/categories/{{category.category_id}}">{{ category.title }}</a>
+                        </abbr>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <nav
+        class="pagination is-rounded"
+        role="navigation"
+        aria-label="pagination"
+      >
+        <a
+          class="pagination-previous"
+          [ngClass]="{ 'is-hidden': isFirstPage }"
+          (click)="changePage(-1)"
+          >Previous</a
+        >
+        <a
+          class="pagination-next"
+          [ngClass]="{ 'is-hidden': hideNextPageBtn }"
+          (click)="changePage(1)"
+          >Next page</a
+        >
+        <ul class="pagination-list"></ul>
+    </nav>
+  </ng-container>
+    <ng-template #noOrderAvailable>
+      <p class="is-subtitle has-text-danger">
+        {{error}}
+      </p>
+    </ng-template>
+  </div>
+</section>

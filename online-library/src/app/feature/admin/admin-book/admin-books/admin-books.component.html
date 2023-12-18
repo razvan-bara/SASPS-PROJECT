@@ -1,0 +1,151 @@
+<div class="container is-fluid has-navbar-fixed-top-spacing-admin">
+  <div class="columns">
+    <div class="column is-primary">
+      <p class="control has-icons-left">
+        <input #search class="input is-link" type="text" placeholder="Cauta dupa titlul cartii" (input)="searchBooks(search.value)" />
+        <span class="icon is-left">
+          <fa-icon [icon]="faSearch"></fa-icon>
+        </span>
+      </p>
+    </div>
+    <div class="column">
+      <div class="dropdown is-hoverable">
+        <div class="dropdown-trigger">
+          <button
+            class="button"
+            aria-haspopup="true"
+            aria-controls="dropdown-menu4"
+          >
+            <span>Categorii</span>
+            <span class="icon is-small">
+              <fa-icon [icon]="faDropdown"></fa-icon>
+            </span>
+          </button>
+        </div>
+        <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+          <div *ngIf="categories$.length > 0; else noCategory" class="dropdown-content">
+            <div *ngFor="let category of categories$" class="dropdown-item">
+                  <label> {{category.title}}
+                    <input type="checkbox" value="{{category.category_id}}" (change)="onCheckCategories($event)">
+                  </label>
+            </div>
+          </div>
+          <ng-template #noCategory>
+            Nu exista nicio categorie disponibila
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <div class="dropdown is-hoverable">
+        <div class="dropdown-trigger">
+          <button
+            class="button"
+            aria-haspopup="true"
+            aria-controls="dropdown-menu4"
+          >
+            <span>Autori</span>
+            <span class="icon is-small">
+              <fa-icon [icon]="faDropdown"></fa-icon>
+            </span>
+          </button>
+        </div>
+        <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+          <div *ngIf="authors$.length > 0; else noAuthors" class="dropdown-content">
+            <div *ngFor="let author of authors$" class="dropdown-item">
+                  <label> {{author.first_name + " " +  author.last_name}}
+                    <input type="checkbox" value="{{author.authorId}}" (change)="onCheckAuthors($event)">
+                  </label>
+            </div>
+          </div>
+          <ng-template #noAuthors>
+            Nu exista niciun author disponibil
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <button class="button is-primary" (click)="filterBooks()">Filtreaza</button>
+    </div>
+  </div>
+  <a routerLink="/admin/books/new"><button class="button is-link">Adauga carte noua</button></a>
+  <nav class="pagination is-rounded" role="navigation" aria-label="pagination">
+    <a
+      class="pagination-previous"
+      [ngClass]="{ 'is-hidden': isFirstPage }"
+      (click)="changePage(-1)"
+      >Inapoi</a
+    >
+    <a
+      class="pagination-next"
+      [ngClass]="{ 'is-hidden': hideNextPageBtn }"
+      (click)="changePage(1)"
+      >Pagina urmatoare</a
+    >
+    <ul class="pagination-list"></ul>
+  </nav>
+  <table class="table is-bordered is-hoverable is-fullwidth">
+    <thead>
+      <tr>
+        <th *ngFor="let key of BOOK_KEYS" [attr.colspan]=" key == 'Descriere' ? 3 : 0 ">{{ key }}</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th *ngFor="let key of BOOK_KEYS" [attr.colspan]=" key == 'Descriere' ? 3 : 0 ">{{ key }}</th>
+      </tr>
+    </tfoot>
+    <tbody>
+      <ng-container *ngIf="books$.length > 0; else noBooks;">
+        <tr *ngFor="let book of books$; let i = index">
+          <th>{{ i * (pageNumber + 1) + 1 }}</th>
+          <th>{{ book.bookId }}</th>
+          <td>{{ book.title }}</td>
+          <td colspan="3">{{ getShortBookDescription(book) }}</td>
+          <td>{{ book.isbn }}</td>
+          <td>{{ book.publishing_year }}</td>
+          <td>{{ book.num_of_pages }}</td>
+          <td>{{ book.count }}</td>
+          <td>
+            <abbr *ngFor="let author of book.authors; let i = index"
+            >{{ author.first_name + " " + author.last_name }}{{ i < book.authors.length - 1 ? ',' : ''}}
+            </abbr>
+          </td>
+          <td>
+            <abbr *ngFor="let category of book.categories"
+              >{{ category.title }}
+            </abbr>
+          </td>
+          <td>{{book.avgBookRating | number : '1.2-2' }}</td>
+          <td>{{book.bookRatingCount }}</td>
+          <td><a routerLink="/admin/books/{{book.bookId}}"><button class="button is-light">Edit</button></a></td>
+          <td (click)="deleteBookRow(book.bookId)">
+            <button class="button is-danger">
+              <fa-icon [icon]="faDelete"></fa-icon>
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+      <ng-template #noBooks>
+        <tr  class="has-text-danger text-center" >
+          <td [attr.colspan]="BOOK_KEYS.length + 2">{{error}}</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+  <nav class="pagination is-rounded" role="navigation" aria-label="pagination">
+    <a
+      class="pagination-previous"
+      [ngClass]="{ 'is-hidden': isFirstPage }"
+      (click)="changePage(-1)"
+      >Inapoi</a
+    >
+    <a
+      class="pagination-next"
+      [ngClass]="{ 'is-hidden': hideNextPageBtn }"
+      (click)="changePage(1)"
+      >Pagina urmatoare</a
+    >
+    <ul class="pagination-list"></ul>
+  </nav>
+</div>

@@ -1,0 +1,16 @@
+.has-dropdown.is-active .navbar-dropdown{
+    display: block;
+}
+
+.has-dropdown .navbar-dropdown{
+    display: none;
+}
+
+.navbar-item.logout:hover{
+    color: hsl(204, 86%, 53%);
+}
+
+.logout > span{
+    border: 1px solid hsl(204, 86%, 53%);
+    border-radius: 10px;
+}

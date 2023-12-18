@@ -1,0 +1,50 @@
+/* You can add global styles to this file, and also import other style files */
+
+@charset "utf-8";
+
+@import "../node_modules/bulma/sass/utilities/_all.sass";
+
+$desktop: 550px;
+
+@import "../node_modules/bulma/sass/base/_all.sass";
+@import "../node_modules/bulma/sass/components/_all.sass";
+@import "../node_modules/bulma/sass/elements/_all.sass";
+@import "../node_modules/bulma/sass/form/_all.sass";
+@import "../node_modules/bulma/sass/grid/_all.sass";
+@import "../node_modules/bulma/sass/helpers/_all.sass";
+@import "../node_modules/bulma/sass/layout/_all.sass";
+// @import "../node_modules/bulma/sass/utilities/_all.sass";
+
+
+@import 'ngx-toastr/toastr';
+
+.full-height {
+    height: 100vh;
+    display: flex;
+}
+
+.text-center{
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.has-navbar-fixed-top-spacing{
+    margin-top: 3.3rem;
+}
+
+.form-has-navbar-fixed-top-spacing-admin{
+    margin-top: 3.3rem;
+}
+
+.has-navbar-fixed-top-spacing-admin{
+    margin-top: 4.5rem;
+}
+
+.menu{
+    margin-left: 5px;
+}
+
+.pagination-next{
+    background: $link;
+    color: $white;
+}

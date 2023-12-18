@@ -1,0 +1,85 @@
+<div class="container is-widescreen has-navbar-fixed-top-spacing-admin">
+    <div class="columns">
+      <div class="column is-primary">
+        <p class="control has-icons-left">
+          <input #search class="input is-link" type="text" placeholder="Cauta ID-ul comenzii" (input)="searchOrders(search.value)" />
+          <span class="icon is-left">
+            <fa-icon [icon]="faSearch"></fa-icon>
+          </span>
+        </p>
+      </div>
+      <div class="column">
+        <button class="button is-primary" (click)="filterOrders()">Filter</button>
+      </div>
+    </div>
+    <nav class="pagination is-rounded" role="navigation" aria-label="pagination">
+      <a
+        class="pagination-previous"
+        [ngClass]="{ 'is-hidden': isFirstPage }"
+        (click)="changePage(-1)"
+        >Inapoi</a
+      >
+      <a
+        class="pagination-next"
+        [ngClass]="{ 'is-hidden': hideNextPageBtn }"
+        (click)="changePage(1)"
+        >Pagina urmatoare</a
+      >
+      <ul class="pagination-list"></ul>
+    </nav>
+    <table class="table is-bordered is-hoverable is-fullwidth">
+      <thead>
+        <tr>
+          <th *ngFor="let key of ORDER_KEYS">{{ key }}</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <th *ngFor="let key of ORDER_KEYS">{{ key }}</th>
+        </tr>
+      </tfoot>
+      <tbody>
+        <ng-container *ngIf="orders$.length > 0; else noOrders;">
+          <tr *ngFor="let order of orders$; let i = index">
+            <th>{{ i * (pageNumber + 1) + 1 }}</th>
+            <th>{{ order.orderId }}</th>
+            <td>{{ order.user.fullName }}</td>
+            <td>{{ order.createdAt | date :'mediumDate' }}</td>
+            <td>{{ order.lendedAt != null ? (order.lendedAt | date :'mediumDate') : "-"   }}</td>
+            <td>{{ order.returnedAt != null ? (order.returnedAt | date :'mediumDate') : "-"   }}</td>
+            <td>{{ order.returnDate != null ? (order.returnDate | date :'mediumDate') : "-"   }}</td>
+            <td [ngClass]="this.getOrderStatusClass(order)">{{ this.getOrderStatus(order) }}</td>
+            <td>{{ order.withDelivery ? "Da" : "Nu"  }}</td>
+            <td>{{ order.books.length  }}</td>
+            <td><a routerLink="/admin/orders/{{order.orderId}}"><button class="button is-light">Edit</button></a></td>
+            <td (click)="deleteOrderRow(order.orderId)">
+              <button class="button is-danger">
+                <fa-icon [icon]="faDelete"></fa-icon>
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+        <ng-template #noOrders>
+          <tr  class="has-text-danger text-center" >
+            <td [attr.colspan]="ORDER_KEYS.length + 2">{{error}}</td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </table>
+    <nav class="pagination is-rounded" role="navigation" aria-label="pagination">
+      <a
+        class="pagination-previous"
+        [ngClass]="{ 'is-hidden': isFirstPage }"
+        (click)="changePage(-1)"
+        >Inapoi</a
+      >
+      <a
+        class="pagination-next"
+        [ngClass]="{ 'is-hidden': hideNextPageBtn }"
+        (click)="changePage(1)"
+        >Pagina urmatoare</a
+      >
+      <ul class="pagination-list"></ul>
+    </nav>
+  </div>
+  

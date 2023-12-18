@@ -1,0 +1,41 @@
+<div *ngIf="nonNullBook" class="card full-parent-height">
+    <a routerLink="/books/{{book?.bookId}}">
+        <div class="card-image">
+            <figure class="image is-4by3">
+                <span class="rating" *ngIf="book?.avgBookRating"> 
+                    {{book?.avgBookRating | number : '1.2-2'}}/5<fa-icon [icon]="faStar"></fa-icon>
+                </span>
+                <img [src]="getImage" alt="Placeholder image">
+            </figure>
+        </div>
+    </a>
+    <div class="card-content">
+        <div class="media">
+            <div class="media-content">
+                <p class="title is-5">{{book?.title}}</p>
+                <p *ngIf="book?.authors?.length" class="subtitle authors is-6">
+                    <a *ngFor="let author of book?.authors; let i = index;" routerLink="/authors/{{author.authorId}}">
+                        {{author.first_name + " " + author.last_name}}{{ i < book?.authors!.length - 1 ? ',' : '' }}
+                    </a> 
+                </p>
+            </div>
+        </div>
+        <div class="content">
+            {{getShortBookDescription}}
+            <br>
+            <span *ngIf="book?.categories?.length">
+                <a *ngFor="let category of book?.categories" routerLink="/categories/{{category?.category_id}}">{{category.title}} </a>
+            </span>
+            <br>
+            An aparitie: <time>{{book?.publishing_year}}</time>
+        </div>
+    </div>
+    <footer class="card-footer">
+        <p class="card-footer-item">
+            <button class="button is-info" (click)="addToCart()">
+                <fa-icon [icon]="faCartButton"></fa-icon>
+            </button>
+        </p>
+      </footer>
+</div>
+

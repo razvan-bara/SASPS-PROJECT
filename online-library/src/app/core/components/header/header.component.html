@@ -1,0 +1,93 @@
+<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a routerLink="/" class="navbar-item">
+      <img
+        src="https://upb.ro/wp-content/uploads/2020/06/logo-oficial-enupb.jpg"
+      />
+    </a>
+
+    <a
+      role="button"
+      class="navbar-burger"
+      [ngClass]="{ 'is-active': isMobile }"
+      (click)="toggleMobileMenu()"
+      aria-label="menu"
+      aria-expanded="false"
+      data-target="navbarBasicExample"
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div
+    id="navbarBasicExample"
+    class="navbar-menu"
+    [ngClass]="{ 'is-active': isMobile }"
+  >
+    <div class="navbar-start">
+      <a *ngFor="let item of navItems;let i=index;" class="navbar-item"
+      routerLink={{routes[i]}}
+    >
+      {{ item }}
+    </a>
+    </div>
+
+    <div class="navbar-end">
+      <ng-container *ngIf="hasAuth; else authBlock">
+        <app-shopping-cart class="navbar-item"></app-shopping-cart>
+      <div
+        class="navbar-item has-dropdown"
+        [ngClass]="{ 'is-active': activeDropDown }"
+        (mouseleave)="deactivateDropDown()"
+      >
+        <a
+          class="navbar-link"
+          (click)="toggleDropDownMenu()"
+          (mouseover)="activateDropDown()"
+        >
+          <fa-icon [icon]="faUser"></fa-icon>
+          
+        </a>
+        <div class="navbar-dropdown is-right">
+          <a class="navbar-item" routerLink="/orders"> Comenzile mele </a>
+          <a *ngIf="isAdmin" routerLink="/admin" class="navbar-item"> Modul admin </a>
+          <hr class="navbar-divider" />
+          <a
+          class="navbar-item is-primary is-small logout"
+          (click)="logout()"
+          >
+              <span class="px-1">
+                <fa-icon class="mr-1 has-text-info" [icon]="faLogout"></fa-icon>
+                Iesi din cont
+              </span>
+            </a>
+        </div>
+      </div>   
+    </ng-container>
+      <ng-template #authBlock>
+        <div class="navbar-item">
+          <div class="buttons">
+            <a
+              routerLink="/register"
+              class="button is-primary"
+              routerLinkActive="active"
+              ariaCurrentWhenActive="page"
+            >
+              <strong> Cont nou </strong>
+            </a>
+            <a
+              routerLink="/login"
+              class="button is-light"
+              routerLinkActive="active"
+              ariaCurrentWhenActive="page"
+            >
+              Intra in cont
+            </a>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</nav>

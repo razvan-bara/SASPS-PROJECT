@@ -1,0 +1,48 @@
+<nav class="navbar is-fixed-top is-dark" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">  
+      <a
+        role="button"
+        class="navbar-burger"
+        [ngClass]="{ 'is-active': isMobile }"
+        (click)="toggleMobileMenu()"
+        aria-label="menu"
+        aria-expanded="false"
+        data-target="navbarBasicExample"
+      >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+  
+    <div
+      id="navbarBasicExample"
+      class="navbar-menu"
+      [ngClass]="{ 'is-active': isMobile }"
+    >
+      <div class="navbar-start">
+        <a *ngFor="let item of navItems;let i=index;" class="navbar-item"
+        routerLink={{routes[i]}}
+      >
+        {{ item }}
+      </a>
+      </div>
+  
+      <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-primary" routerLink="/">
+                Iesi din modul admin
+              </a>
+                <a
+                class="button"
+                (click)="logout()"
+              >
+                Iesi din cont
+              </a>
+            </div>
+          </div>
+      </div>
+    </div>
+  </nav>
+  

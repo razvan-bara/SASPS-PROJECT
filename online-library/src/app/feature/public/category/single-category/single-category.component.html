@@ -1,0 +1,12 @@
+<ng-container *ngIf="category$ != null else isError">
+    <app-books-list [title]="title" [subtitle]="subtitle" [categoryId]="category$.category_id"></app-books-list>
+</ng-container>
+<ng-template #isError>
+    <section class="hero is-danger has-navbar-fixed-top-spacing">
+        <div class="hero-body">
+          <p class="title">
+            {{error}}
+          </p>
+        </div>
+      </section>
+</ng-template>

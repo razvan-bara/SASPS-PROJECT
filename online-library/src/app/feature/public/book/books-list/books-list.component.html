@@ -1,0 +1,85 @@
+<section class="hero is-link is-small has-navbar-fixed-top-spacing text-center">
+    <div class="hero-body">
+      <p class="title">{{title}}</p>
+      <p class="subtitle">{{subtitle}}</p>
+    </div>
+  </section>
+  <br />
+  <div class="columns">
+    <div class="column is-one-quarter">
+      <aside class="menu">
+        <p class="title is-5">Cauta ce carte iti doresti</p>
+        <p class="menu-label">Cauta dupa titlul cartii</p>
+        <ul class="menu-list">
+          <div class="field is-grouped">
+            <p class="control is-expanded">
+              <input
+                #search
+                class="input"
+                type="text"
+                placeholder="Scrie titlul cartii"
+                (keyup)="searchBooks(search.value)"
+              />
+            </p>
+          </div>
+        </ul>
+        <ng-container *ngIf="loadingAuthors">
+
+          <p class="menu-label">Selecteaza autorul dorit</p>
+          <select2
+          [overlay]="false"
+          [data]="authorsSelect2"
+          [multiple]="false"
+          (update)="updateAuthorForQuery($event)"
+          id="selec2-21"
+          >
+        </select2>
+      </ng-container>
+        <ng-container *ngIf="!categoryId">
+        <ng-container *ngIf="categories$.length > 0">
+          <p class="menu-label">Categorii</p>
+          <ul class="menu-list">
+            <li>
+              <ul>
+                <li *ngFor="let category of categories$">
+                  <label class="checkbox">
+                    <input type="checkbox" value="{{category.category_id}}" (change)="onCheckChange($event)" />
+                    {{category.title}}
+                  </label>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </ng-container>
+      </ng-container>
+      </aside>
+    </div>
+    <div class="column is-three-quarters">
+      <ng-container *ngIf="books$.length > 0; else noBooks">
+      <div class="columns is-multiline">
+        <div class="column is-one-quarter " *ngFor="let book of books$">
+            <app-book-card *ngIf="book.count > 0"  [book]="book" (userNotLoggedIn)="fireAuthenticationModal($event)"></app-book-card>
+          </div>
+        </div>
+      <br />
+      <nav
+        class="pagination is-rounded"
+        role="navigation"
+        aria-label="pagination"
+      >
+        <a class="pagination-previous" [ngClass]="{ 'is-hidden': isFirstPage }" (click)="changePage(-1)">Inapoi</a>
+        <a class="pagination-next" [ngClass]="{ 'is-hidden': hideNextPageBtn }" (click)="changePage(1)">Pagina urmatoare</a>
+        <ul class="pagination-list">
+        </ul>
+      </nav>
+      </ng-container>
+    </div>
+    <ng-template #noBooks>
+      <section class="hero  is-small has-navbar-fixed-top-spacing text-center">
+        <div class="hero-body">
+          <p class="subtitle has-text-danger">{{error}}</p>
+        </div>
+      </section>
+    </ng-template>
+  </div>
+  <app-auth-modal [modalInput]="showModal" (closeModal)="hideModal()"></app-auth-modal>

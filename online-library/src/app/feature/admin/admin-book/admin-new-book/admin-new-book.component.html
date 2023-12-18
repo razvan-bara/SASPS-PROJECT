@@ -1,0 +1,7 @@
+<section class="hero is-primary is-small form-has-navbar-fixed-top-spacing-admin text-center">
+    <div class="hero-body">
+      <p class="title">Adauga o carte noua</p>
+    </div>
+  </section>
+  <br>
+<app-admin-book-form (bookFormEvent)="addBook($event)" [decideToResetFormEvent]="resetBookForm.asObservable()"></app-admin-book-form>

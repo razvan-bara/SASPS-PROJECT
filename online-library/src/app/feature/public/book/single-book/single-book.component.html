@@ -1,0 +1,49 @@
+<section class="has-navbar-fixed-top-spacing columns">
+  <div class="column pr-0">
+    <div class="card">
+      <div class="card-image">
+        <figure class="image is-4by3">
+          <img [src]="getImage" alt="Placeholder image">
+        </figure>
+      </div>
+    </div>
+  </div>
+  <div class="column pl-0">
+    <section class="hero is-small is-info">
+      <div class="hero-body">
+        <h1 class="title">
+          {{book?.title}}
+        </h1>
+        <h2 class="subtitle">
+          De
+          <a *ngFor="let author of book?.authors; let i = index;" routerLink="/authors/{{author.authorId}}">
+            {{author.first_name + " " + author.last_name}}{{ i < book?.authors!.length - 2 ? ',' : (i == book?.authors!.length-2 ? ' si' : '')  }}
+          </a>
+        </h2>
+      </div>
+    </section>
+    <article class="message is-link">
+      <div class="message-body has-text-black-bis content">
+        <h3>Descriere</h3>
+        <p>{{book?.description}}</p>
+        <h4>Categoriile cartii</h4>
+        <ul *ngIf="book?.categories?.length">
+          <li *ngFor="let category of book?.categories" >
+            <a routerLink="/categories/{{category?.category_id}}">{{category.title}} </a>
+          </li>
+        </ul>
+        <p>Numar de pagini: {{book?.num_of_pages}}</p>
+        <p class="title is-6">An aparitie: {{book?.publishing_year}}</p>
+        <span class="columns is-mobile">
+          <p class="column is-11 title is-6">ISBN: {{book?.isbn}}</p>
+          <button class="button is-info" (click)="addToCart()">
+            <fa-icon [icon]="faCartButton"></fa-icon>
+        </button>
+        </span>
+        <a (click)="displayRatingModal()" class="has-text-info">Lasa un review</a>
+        </div>
+    </article>
+  </div>
+</section>
+<app-rating [modalInput]="showRatingModal" [book]="book" (hideRatingModal)="hideRatingModal()"></app-rating>
+<app-auth-modal [modalInput]="showAuthModal" (closeModal)="hideAuthModal()"></app-auth-modal>

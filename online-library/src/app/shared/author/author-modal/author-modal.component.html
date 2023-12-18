@@ -1,0 +1,26 @@
+<div 
+    [ngClass]="authorInput ? 'is-active' : ''"
+    class="modal"
+    >
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title has-text-danger">
+            <fa-icon [icon]="faDanger"></fa-icon>
+            Atentie!
+        </p>
+        <button (click)="emitToDelete(false)"  class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body has-text-danger">
+        Autorul {{authorInput.first_name + " " + authorInput.last_name}} are {{ authorInput.bookCount }} carti inregistrate. 
+        <br>
+        Odata cu stergerea acestuia, vor fi pierdute si cartile lui!
+        <br>
+        Daca confirmati, rezultatul operatiei va fi ireversibil
+      </section>
+      <footer class="modal-card-foot">
+          <button (click)="emitToDelete(true)" class="button is-danger">Confirm steregrea</button>
+          <button (click)="emitToDelete(false)" class="button">Anuleaza</button>
+      </footer>
+    </div>
+  </div>

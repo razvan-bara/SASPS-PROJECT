@@ -1,0 +1,27 @@
+<label class="label">Adresa disponibila (doar municipiul Bucuresti)</label>
+<table class="table is-fullwidth">
+  <thead>
+    <tr>
+      <th>Strada</th>
+      <th>Numar</th>
+      <th>Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngIf="address$ != null; else noAddressRow">
+      <td>{{address$.street}}</td>
+      <td>{{address$.number}}</td>
+      <td>
+        <a (click)="openEditAddressModal()" class="button is-small is-info"
+          ><fa-icon [icon]="faPenAlt"></fa-icon
+        ></a>
+      </td>
+    </tr>
+    <ng-template #noAddressRow>
+      <tr class="text-center">
+        <td colspan="4">Nu ai nicio adresa salvata. Adauga una <a (click)="openNewAddressModal()">aici</a></td>
+      </tr></ng-template
+    >
+  </tbody>
+</table>
+<app-address-form *ngIf="showModal" [modalInput]="showModal" [address]="address$" [edit]="isEdit" (closeModalEvent)="closeModal()" (addressFormEvent)="submitForm($event)" ></app-address-form>

@@ -1,0 +1,167 @@
+<div *ngIf="isDataLoaded" class="bg-primary">
+  <div class="container is-max-desktop">
+    <form class="box" [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+      <div class="field">
+        <label class="label">Titlu</label>
+        <div class="control">
+          <input 
+          class="input"
+          [ngClass]="{'is-success': isTitleValid, 'is-danger' : isTitleInvalid}" 
+          type="text" 
+          placeholder="Titlul cartii"
+          formControlName="title" 
+          required
+          />
+        </div>
+        <div *ngIf="isTitleTouched">
+          <p *ngIf="isTitleEmpty" class="help is-danger">Titlul este necesar</p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">ISBN</label>
+        <div class="control">
+          <input
+            class="input"
+            [ngClass]="{'is-success': isIsbnValid, 'is-danger' : isIsbnInvalid}" 
+            type="text"
+            formControlName="isbn" 
+            placeholder="Introdu ISBN..."
+            value=""
+          />
+        </div>
+        <div *ngIf="isIsbnTouched">
+          <p *ngIf="isIsbnInvalid" class="help is-danger">ISBN-ul este necesar si are 13 numere</p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Descriere</label>
+        <div class="control">
+          <textarea
+            [ngClass]="{'is-success': isDescriptionValid, 'is-danger' : isDescriptionInvalid}" 
+            class="textarea"
+            placeholder="Introdu descrierea cartii"
+            formControlName="description"
+          ></textarea>
+        </div>
+        <div *ngIf="isDescriptionTouched">
+          <p *ngIf="isDescriptionInvalid" class="help is-danger">Descrierea cartii este necesara</p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Autori</label>
+        <p class="help">Selecteaza cel putin un autor</p>
+        <div class="control">
+          <select2
+          [ngClass]="{'is-success': isAuthorValid, 'is-danger' : isAuthorInvalid}" 
+          [overlay]="overlay"
+          [data]="authorsSelect2"
+          [value]="authorSelect2Value"
+          formControlName="authors_id"
+          [multiple]="true"
+          resettable
+          id="selec2-2"
+          >
+      </select2>
+        <div *ngIf="isAuthorTouched">
+          <p *ngIf="isAuthorInvalid" class="help is-danger">Selectarea unui autor este necesara</p>
+        </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Categorii</label>
+        <p class="help">Selecteaza una sau mai multe categorii</p>
+        <div class="control">
+          <select2
+          [overlay]="overlay"
+          [data]="categoriesSelect2"
+          formControlName="categories_id"
+          [multiple]="true"
+          [value]="categorySelect2Value"
+          resettable
+          id="selec2-1"
+          >
+      </select2>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Imagine</label>
+        <div class="control">
+          <span class="button is-info is-light" (click)="bookImageInput.click()">
+            Incarca o imagine
+            <fa-icon class="ml-2" [icon]="faUpload"></fa-icon>
+          </span>
+          <input 
+          #bookImageInput
+          [ngClass]="{'is-success': isPublishingYearValid, 'is-danger' : isPublishingYearInvalid}" 
+          class="is-hidden"
+          type="file"
+          accept="image/*" 
+          (change)="selectFile($event)"
+          />
+        </div>
+        <div>
+          <img [src]="preview" class="preview">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">An publicare</label>
+        <div class="control">
+          <input 
+          [ngClass]="{'is-success': isPublishingYearValid, 'is-danger' : isPublishingYearInvalid}" 
+          class="input"
+          type="number"
+          placeholder="ex: 2012"
+          formControlName="publishing_year"
+          />
+        </div>
+        <div *ngIf="isPublishingYearTouched">
+          <p *ngIf="isPublishingYearInvalid" class="help is-danger">Anul este invalid</p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Numar de pagini</label>
+        <div class="control">
+          <input
+            class="input"
+            [ngClass]="{'is-success': isNumOfPagesValid, 'is-danger' : isNumOfPagesInvalid}" 
+            type="number"
+            placeholder="Introdu nr de pagini"
+            formControlName="num_of_pages"
+          />
+        </div>
+        <div *ngIf="isNumOfPagesTouched">
+          <p *ngIf="isNumOfPagesInvalid" class="help is-danger">Numarul de pagini este necesar</p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Stoc</label>
+        <div class="control">
+          <input
+            class="input"
+            [ngClass]="{'is-success': isCountValid, 'is-danger' : isCountInvalid}" 
+            type="number"
+            placeholder="Cate carti sunt disponibile?"
+            formControlName="count"
+          />
+        </div>
+        <div *ngIf="isCountTouched">
+          <p *ngIf="isCountInvalid" class="help is-danger">Numarul de carti este necesar</p>
+        </div>
+      </div>
+
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-primary" type="submit" [disabled]="!bookForm.valid">Trimite</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

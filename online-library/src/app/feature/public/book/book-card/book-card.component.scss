@@ -1,0 +1,23 @@
+.list-card{
+    overflow: hidden;
+    border-radius: 12px;
+    align-self: center;
+    justify-self: center;
+}
+
+.rating,
+.rating:hover{
+    color: hsl(217, 71%, 53%);
+}
+
+.rating{
+    background: white;
+    opacity: 0.7;
+    position: absolute;
+    z-index: 10;
+    top:0;
+}
+
+.media-content .authors{
+    min-height: 40px;
+}

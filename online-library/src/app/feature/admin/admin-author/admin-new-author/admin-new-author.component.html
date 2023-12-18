@@ -1,0 +1,7 @@
+<section class="hero is-primary is-small form-has-navbar-fixed-top-spacing-admin text-center">
+    <div class="hero-body">
+      <p class="title">Adauga un autor nou</p>
+    </div>
+  </section>
+  <br>
+<app-admin-author-form (authorFormEvent)="addAuthor($event)" [decideToResetFormEvent]="resetAuthorForm.asObservable()"></app-admin-author-form>

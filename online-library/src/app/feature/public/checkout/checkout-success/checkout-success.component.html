@@ -1,0 +1,30 @@
+<ng-container *ngIf="dataLoaded">
+<section *ngIf="hasSuccess; else error"  class="hero is-medium is-success has-navbar-fixed-top-spacing">
+    <div class="hero-body">
+      <p class="title is-2">
+        Multumim pentru comanda!
+      </p>
+      <p class="subtitle">
+        Aceasta a fost salvata in baza noastra de date.
+      </p>
+      <p class="subtitle">
+        Te asteptam la biblioteca pentru a ridica cartile sau asteapta telefonul curierului.
+      </p>
+    </div>
+  </section>
+  <ng-template #error>
+    <section class="hero is-medium is-danger has-navbar-fixed-top-spacing">
+      <div class="hero-body">
+        <p class="title is-2">
+          A aparut o eroare
+        </p>
+        <p class="subtitle">
+          {{errorMsg}}
+        </p>
+        <p class="subtitle">
+          Te rugam sa contactezi biblioteca pentru ajutor daca este nevoie
+        </p>
+      </div>
+    </section>
+  </ng-template>
+</ng-container>

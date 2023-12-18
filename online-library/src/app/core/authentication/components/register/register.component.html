@@ -1,0 +1,116 @@
+<div class="columns is-vcentered full-height bg-primary">
+    <div class="container is-max-desktop">
+        <form class="box" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="field">
+                <label class="label">Prenume</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input
+                    class="input"
+                    [ngClass]="{'is-success' : isFirstNameValid, 'is-danger': isFirstNameInvalid}"
+                    type="text"
+                    placeholder="Eg. Stefan"
+                    formControlName="first_name"
+                    required
+                  />
+                  <span class="icon is-small is-left">
+                    <fa-icon [icon]="faUser"></fa-icon>
+                  </span>
+                  <span *ngIf="isFirstNameTouched" class="icon is-small is-right">
+                    <fa-icon [icon]="faExclamation"></fa-icon>
+                  </span>
+                  <div *ngIf="isFirstNameTouched">
+                    <p *ngIf="isFirstNameEmpty" class="help is-danger">Prenumele este necesar</p>
+                    <p *ngIf="isFirstNameFormat" class="help is-danger">Prenumele poate contine doar litere</p>
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Nume</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input
+                    class="input"
+                    [ngClass]="{'is-success' : isLastNameValid, 'is-danger': isLastNameInvalid}"
+                    type="text"
+                    placeholder="Eg. Ionescu"
+                    formControlName="last_name"
+                    required
+                  />
+                  <span class="icon is-small is-left">
+                    <fa-icon [icon]="faUser"></fa-icon>
+                  </span>
+                  <span *ngIf="isLastNameTouched" class="icon is-small is-right">
+                    <fa-icon [icon]="faExclamation"></fa-icon>
+                  </span>
+                  <div *ngIf="isLastNameTouched">
+                    <p *ngIf="isLastNameEmpty" class="help is-danger">Numele este necesar</p>
+                    <p *ngIf="isLastNameFormat" class="help is-danger">Numele poate contine doar litere</p>
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Email</label>
+                <div class="control has-icons-left has-icons-right">
+                    <input
+                    class="input"
+                    [ngClass]="{'is-success' : isEmailValid, 'is-danger': isEmailInvalid}"
+                    type="email"
+                    placeholder="Eg. hello@gmail.com"
+                    formControlName="email"
+                    required
+                  />
+                  <span class="icon is-small is-left">
+                    <fa-icon [icon]="faEnvelope"></fa-icon>
+                  </span>
+                  <span *ngIf="isEmailTouched" class="icon is-small is-right">
+                    <fa-icon [icon]="faExclamation"></fa-icon>
+                  </span>
+                  <div *ngIf="isEmailTouched">
+                    <p *ngIf="isEmailEmpty" class="help is-danger">Emailul este necesar</p>
+                    <p *ngIf="isEmailFormat" class="help is-danger">Format mail nepotrivit</p>
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Parola</label>
+                <div class="control has-icons-left">
+                  <input 
+                  class="input" 
+                  [ngClass]="{'is-success' : isPasswordValid, 'is-danger': isPasswordInvalid}"
+                  type="password" 
+                  placeholder="********" 
+                  formControlName="password"
+                  required
+                  />
+                  <span class="icon is-small is-left">
+                    <fa-icon [icon]="faLock"></fa-icon>
+                  </span>
+                </div>
+                <div *ngIf="isPasswordTouched">
+                  <p *ngIf="isPasswordEmpty" class="help is-danger">Parola este necesara</p>
+                  <p *ngIf="isPasswordLongEnough" class="help is-danger">Parola trebuie sa contina minim 6 caractere</p>
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Confirma parola</label>
+                <div class="control has-icons-left">
+                  <input 
+                  class="input" 
+                  [ngClass]="{'is-success' : isConfirmPasswordValid, 'is-danger': isConfirmPasswordTouched}"
+                  type="password" 
+                  placeholder="********" 
+                  formControlName="confirm_password"
+                  required
+                  />
+                  <span class="icon is-small is-left">
+                    <fa-icon [icon]="faLock"></fa-icon>
+                  </span>
+                </div>
+                <div *ngIf="isConfirmPasswordTouched">
+                  <p *ngIf="!isConfirmPasswordValid" class="help is-danger">Parolele nu se potrivesc</p>
+                </div>
+              </div>   
+              <button class="button is-primary" type="submit" [disabled]="!registerForm.valid" >Sign up</button>           
+        </form>
+        <p *ngIf="error" class="help is-danger text-center"> {{error}}</p>
+    </div>
+</div>
